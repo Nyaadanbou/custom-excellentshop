@@ -33,6 +33,7 @@ public class ProductHandlerRegistry {
         register(plugin, bukkitItemHandler = new BukkitItemHandler(plugin));
         register(plugin, bukkitCommandHandler = new BukkitCommandHandler(plugin));
 
+        register(plugin, HookId.WAKAME, () -> new NekooItemHandler(plugin));
         register(plugin, HookId.EXCELLENT_CRATES, () -> new ExcellentCratesHandler(plugin));
     }
 
