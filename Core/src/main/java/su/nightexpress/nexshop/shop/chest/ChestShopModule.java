@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import su.nightexpress.economybridge.EconomyBridge;
-import su.nightexpress.economybridge.currency.CurrencyManager;
 import su.nightexpress.nexshop.Placeholders;
 import su.nightexpress.nexshop.ShopPlugin;
 import su.nightexpress.economybridge.api.Currency;
@@ -43,14 +42,11 @@ import su.nightexpress.nexshop.shop.chest.config.ChestConfig;
 import su.nightexpress.nexshop.shop.chest.config.ChestKeys;
 import su.nightexpress.nexshop.shop.chest.config.ChestLang;
 import su.nightexpress.nexshop.shop.chest.config.ChestPerms;
-import su.nightexpress.nexshop.shop.chest.display.ProtocolLibHandler;
 import su.nightexpress.nexshop.shop.chest.impl.ChestBank;
 import su.nightexpress.nexshop.shop.chest.impl.ChestProduct;
 import su.nightexpress.nexshop.shop.chest.impl.ChestShop;
 import su.nightexpress.nexshop.shop.chest.impl.ChestStock;
-import su.nightexpress.nexshop.shop.chest.listener.RegionMarketListener;
 import su.nightexpress.nexshop.shop.chest.listener.ShopListener;
-import su.nightexpress.nexshop.shop.chest.listener.UpgradeHopperListener;
 import su.nightexpress.nexshop.shop.chest.menu.*;
 import su.nightexpress.nexshop.shop.chest.util.BlockPos;
 import su.nightexpress.nexshop.shop.chest.util.ShopMap;
@@ -216,21 +212,7 @@ public class ChestShopModule extends AbstractShopModule implements TransactionMo
     private void loadHooks() {
         if (ChestConfig.SHOP_CREATION_CLAIM_ONLY.get()) {
             this.claimHooks = new HashSet<>();
-            this.loadClaimHook(HookId.LANDS, () -> new LandsHook(this.plugin));
-            this.loadClaimHook(HookId.GRIEF_PREVENTION, GriefPreventionHook::new);
-            this.loadClaimHook(HookId.GRIEF_DEFENDER, GriefDefenderHook::new);
             this.loadClaimHook(HookId.WORLD_GUARD, WorldGuardHook::new);
-            this.loadClaimHook(HookId.KINGDOMS, KingdomsHook::new);
-        }
-
-        if (Plugins.isInstalled(HookId.ADVANCED_REGION_MARKET)) {
-            this.addListener(new RegionMarketListener(this.plugin, this));
-        }
-
-        if (ChestUtils.isInfiniteStorage()) {
-            if (Plugins.isInstalled(HookId.UPGRADEABLE_HOPPERS)) {
-                this.addListener(new UpgradeHopperListener(this.plugin, this));
-            }
         }
     }
 
@@ -246,10 +228,6 @@ public class ChestShopModule extends AbstractShopModule implements TransactionMo
         if (Plugins.isInstalled(HookId.PACKET_EVENTS)) {
             this.displayHandler = new PacketEventsHandler(this.plugin, this);
         }
-        else if (Plugins.isLoaded(HookId.PROTOCOL_LIB)) {
-            this.displayHandler = new ProtocolLibHandler(this.plugin, this);
-        }
-
         if (this.displayHandler != null) {
             this.displayHandler.setup();
 

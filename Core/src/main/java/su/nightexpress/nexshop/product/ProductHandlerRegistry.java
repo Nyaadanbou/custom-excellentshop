@@ -33,9 +33,6 @@ public class ProductHandlerRegistry {
         register(plugin, bukkitItemHandler = new BukkitItemHandler(plugin));
         register(plugin, bukkitCommandHandler = new BukkitCommandHandler(plugin));
 
-        register(plugin, HookId.ORAXEN, () -> new OraxenItemHandler(plugin));
-        register(plugin, HookId.ITEMS_ADDER, () -> new ItemsAdderHandler(plugin));
-        register(plugin, HookId.MMOITEMS, () -> new MMOItemsHandler(plugin));
         register(plugin, HookId.EXCELLENT_CRATES, () -> new ExcellentCratesHandler(plugin));
     }
 

@@ -31,7 +31,6 @@ import su.nightexpress.nexshop.shop.virtual.impl.RotatingShop;
 import su.nightexpress.nexshop.shop.virtual.impl.StaticShop;
 import su.nightexpress.nexshop.shop.virtual.impl.VirtualDiscount;
 import su.nightexpress.nexshop.shop.virtual.impl.VirtualPreparedProduct;
-import su.nightexpress.nexshop.shop.virtual.listener.VirtualShopNPCListener;
 import su.nightexpress.nexshop.shop.virtual.menu.CentralMenu;
 import su.nightexpress.nexshop.shop.virtual.menu.SellMenu;
 import su.nightexpress.nexshop.shop.virtual.menu.ShopLayout;
@@ -105,11 +104,6 @@ public class VirtualShopModule extends AbstractShopModule implements Transaction
         }
         else this.loadShops();
         this.loadLayouts();
-
-        if (Plugins.isLoaded(HookId.CITIZENS)) {
-            this.warn(HookId.CITIZENS + " support is deprecated and will be removed in future versions. Please, use NPC commands to assign your virtual shops to NPCs.");
-            this.addListener(new VirtualShopNPCListener(this));
-        }
 
         if (VirtualConfig.isCentralMenuEnabled()) {
             this.loadMainMenu();
